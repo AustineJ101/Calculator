@@ -1,0 +1,110 @@
+*{
+  box-sizing: border-box;
+}
+
+body{
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.calc-container{
+  width: 354px;
+  height: 504px;
+  border: 2px solid maroon;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  border-radius: 10px;
+  overflow: hidden;
+
+
+}
+
+.display-sect{
+  height: 150px;
+  display: flex;
+  align-items: end;
+  background-color: grey;
+}
+
+.output{
+  height: 100px;
+  text-align: right;
+  padding: 10px;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  gap: 10px;
+}
+
+.output .expression,
+.output .result{
+  color: white;
+}
+
+.output .expression{
+  font-size: 20px;
+}
+
+.output .result{
+  font-size: 25px;
+  font-weight: 700;
+}
+
+
+.keys-sect{
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.top-sect{
+  display: flex;
+}
+
+button{
+  width: calc(350px / 4);
+  height: calc(350px / 5);
+  background-color: grey;
+  color: white;
+  border: 1px solid white;
+  font-size: 25px;
+
+}
+
+button:active{
+  opacity: 0.8;
+}
+
+.bottom-sect{
+  flex-grow: 1;
+  display: flex;
+ 
+}
+
+.left-sect{
+  width: calc(0.75 * 350px);
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+}
+
+.right-sect{
+ height: 100%;
+ flex-grow: 1;
+ display: flex;
+ flex-direction: column;
+}
+
+.right-sect #equalBtn{
+  flex-grow: 1;
+}
+
+.top-sect button,
+.right-sect button{
+  background-color: darkred;
+}
