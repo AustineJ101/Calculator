@@ -25,7 +25,7 @@ function isOnlyNegativeSign(array){
 }
 
 function removeLeadingZero(array){
-  if(array[0] === "0" && (array[1] > 0 || array[1] === "0")){
+  if(array[0] == "0" && (array[1] > 0 || array[1] == "0")){
     array.shift();
   }
   
@@ -36,206 +36,209 @@ function hasPoint(array){
 }
 
 function operate(first, op, second){
-  let operand1 = Number(first.join(''));
-  let operator = op;
-  let operand2 = Number(second.join(''));
+    let operand1 = Number(first.join(''));
+    let operator = op;
+    let operand2 = Number(second.join(''));
 
-  switch(operator){
-    case "+":
-      result = add(operand1, operand2);
-      break;
-    case "-":
-      result = subtract(operand1, operand2);
-      break;
-    case "/":
-      result = divide(operand1, operand2);
-      break;
-    case "*":
-      result = multiply(operand1, operand2);
-      break;
-    case "%":
-      result = remainder(operand1, operand2);
-      break;
-  }
+    switch(operator){
+        case "+":
+            result = add(operand1, operand2);
+          break;
+        case "-":
+           result = subtract(operand1, operand2);
+          break;
+        case "/":
+            result = divide(operand1, operand2);
+          break;
+        case "*":
+            result = multiply(operand1, operand2);
+          break;
+        case "%":
+            result = remainder(operand1, operand2);
+          break;
+    }
 
     return Number.isInteger(result)? result 
     :Number(result.toFixed(4));  
 }
 
+function renderResult(result){
+  output.lastElementChild.textContent = result;
+ 
+ }
+ 
+ function clear(){
+   output.firstElementChild.textContent = '';
+   output.lastElementChild.textContent = '';
+ 
+ };
 
 
-
-function getValue(event){
+function handleExpression(event){
   let isFirstNumEmpty;
   let isSecondNumEmpty;
+
   switch(event.target.id){
     case "operator":
      
-     if(output.lastElementChild.textContent){
-      firstNum = [output.lastElementChild.textContent];
-    } 
+      if(output.lastElementChild.textContent){
+          firstNum = [output.lastElementChild.textContent];
+      } 
 
-     isFirstNumEmpty = isEmpty(firstNum);
-     isSecondNumEmpty = isEmpty(secondNum);
+      isFirstNumEmpty = isEmpty(firstNum);
+      isSecondNumEmpty = isEmpty(secondNum);
 
-    
-    if(isFirstNumEmpty){
-      if(event.target.textContent === "-"){
-        firstNum.push(event.target.textContent);
-       
-      }
-      renderExpession(operator);
       
-    } else if(isSecondNumEmpty ){
-        if(operator){
+      if(isFirstNumEmpty){
           if(event.target.textContent === "-"){
-            secondNum.push(event.target.textContent);
+            firstNum.push(event.target.textContent);
+          
           }
-             
-        }else{
         
-          if(isOnlyNegativeSign(firstNum)){
-               // This check ensures that the first num array cannot have more that 1 negative sign
-          } else{
-            operator = event.target.textContent;
+      } else if(isSecondNumEmpty ){
+            if(operator){
+                if(event.target.textContent === "-"){
+                    secondNum.push(event.target.textContent);
+                }
+              
+            }else{
+                if(isOnlyNegativeSign(firstNum)){
+                    // This check ensures that the first num array cannot have more that 1 negative sign
+                } else{
+                    operator = event.target.textContent;
+                }
+            
+            }
+
+      } else{
+
+          if(isOnlyNegativeSign(secondNum)){
+              //  This ensures that chain operation does not proceed if the secondNum array only has a neg sign
+              // Also ensures that the secondNum cannot have more that one neg sign
+          }else{
+              result = operate(firstNum, operator, secondNum);
+              firstNum = [result];
+              operator = event.target.textContent;
+              secondNum = [];
           }
-         
-        }
-        renderExpession(operator);
-    } else{
-      if(isOnlyNegativeSign(secondNum)){
-          //  This ensures that chain operation does not proceed if the secondNum array only has a neg sign
-          // Also ensures that the secondNum cannot have more that one neg sign
-      }else{
-        result = operate(firstNum, operator, secondNum);
-        firstNum = [result];
-        operator = event.target.textContent;
-        secondNum = [];
+        
+
       }
-      
 
       renderExpession(operator);
 
-    }
-
-      break;
+    break;
 
     case "number":
-      if(!operator){
-        firstNum.push(event.target.textContent);
-         removeLeadingZero(firstNum);
-         renderExpession(operator);
-    
-      } else{
-        secondNum.push(event.target.textContent);
-        removeLeadingZero(secondNum);
-        renderExpession(operator);
-      }
+      // Presence of an operator determines whether or not we're entering the 1st or 2nd operator
+        if(!operator){
+            firstNum.push(event.target.textContent);
+      
+        } else{
+            secondNum.push(event.target.textContent);
+          
+        }
 
+        removeLeadingZero(firstNum);
+        renderExpession(operator);
       break;
 
     case "clearBtn":
-      firstNum = [];
-      operator = "";
-      secondNum = [];
+        firstNum = [];
+        operator = "";
+        secondNum = [];
 
-      clear();
+        clear();
 
       break;
 
     case "deleteBtn":
-      isSecondNumEmpty = isEmpty(secondNum);
-      isFirstNumEmpty = isEmpty(firstNum);
-      if(!isSecondNumEmpty){
-        secondNum.pop();
+        isSecondNumEmpty = isEmpty(secondNum);
+        isFirstNumEmpty = isEmpty(firstNum);
+
+        if(!isSecondNumEmpty){
+            secondNum.pop();
+
+        } else if(operator){
+            operator = "";
+
+        } else if(!isFirstNumEmpty){
+            firstNum.pop();
+        }
+
         renderExpession(operator);
-      } else if(operator){
-        operator = "";
-        renderExpession(operator);
-      } else if(!isFirstNumEmpty){
-        firstNum.pop();
-        renderExpession(operator);
-      }
       break;
 
     case "point":
-      isSecondNumEmpty = isEmpty(secondNum);
-      isFirstNumEmpty = isEmpty(firstNum);
-      if(operator){
-          if(isSecondNumEmpty){
-            secondNum.push("0.");
-            renderExpession(operator);
+        isSecondNumEmpty = isEmpty(secondNum);
+        isFirstNumEmpty = isEmpty(firstNum);
+
+         if(operator){
+              if(isSecondNumEmpty){
+                  secondNum.push("0.");
+              } else{
+                  let pointPresent = hasPoint(secondNum);
+                  if(pointPresent){
+                    // This check prevents having more than one point in the second operand
+                  }else{
+                      secondNum.push(".");
+                  }
+              }
           } else{
-            let pointPresent = hasPoint(secondNum);
-            if(pointPresent){
+              if(isFirstNumEmpty || (firstNum.length == 1 && firstNum[0] == "-")){
+                firstNum.push("0.");
 
-            }else{
-              secondNum.push(".");
-              renderExpession(operator);
+              } else{
+                let pointPresent = hasPoint(firstNum);
+                if(pointPresent){
+                  // Prevents having more than one point in the 1st operand
+                }else{
+                  firstNum.push(".");
+          
+                }
+              }
             }
-          }
-      } else{
-        if(isFirstNumEmpty || (firstNum.length == 1 && firstNum[0] == "-")){
-          firstNum.push("0.");
-          renderExpession(operator);
-        } else{
-          let pointPresent = hasPoint(firstNum);
-          if(pointPresent){
 
-          }else{
-            firstNum.push(".");
-            renderExpession(operator);
-          }
-        }
-      }
+          renderExpession(operator);
       break;
 
     case "equalBtn":
-      isFirstNumEmpty = isEmpty(firstNum);
-      isSecondNumEmpty = isEmpty(secondNum);
-    
-      if(!isFirstNumEmpty && !isSecondNumEmpty){
-       result = operate(firstNum, operator, secondNum);
-       firstNum = [];
-       operator = '';
-       secondNum = [];
+        isFirstNumEmpty = isEmpty(firstNum);
+        isSecondNumEmpty = isEmpty(secondNum);
+      
+        if(!isFirstNumEmpty && !isSecondNumEmpty){
+            result = operate(firstNum, operator, secondNum);
+            firstNum = [];
+            operator = '';
+            secondNum = [];
 
-       renderResult(result);
-      }
+        }
+
+        renderResult(result);
       break;
   }
 }
 
-keys.addEventListener("click", getValue);
+keys.addEventListener("click", handleExpression);
 
 
 
 function renderExpession(operator){
-  let first = firstNum.length > 0?  firstNum.slice().join('') : "";
-  let second = secondNum.length > 0? secondNum.slice().join(''): "";
+    let first = firstNum.length > 0?  firstNum.slice().join('') : "";
+    let second = secondNum.length > 0? secondNum.slice().join(''): "";
 
-   if(output.lastElementChild.textContent){
-    output.lastElementChild.textContent = '';
-   }
+    if(output.lastElementChild.textContent){
+        output.lastElementChild.textContent = '';
+    }
 
-  if(first && second){
-    output.firstElementChild.textContent = `${first} ${operator} ${second}`;
-  } else if(!second && operator){
-    output.firstElementChild.textContent = `${first} ${operator}`;
-  } else if(!second && !operator){
-    output.firstElementChild.textContent = `${first}`;
-  }
-
-}
-
-function renderResult(result){
- output.lastElementChild.textContent = result;
+    if(first && second){
+        output.firstElementChild.textContent = `${first} ${operator} ${second}`;
+    } else if(!second && operator){
+        output.firstElementChild.textContent = `${first} ${operator}`;
+    } else if(!second && !operator){
+        output.firstElementChild.textContent = `${first}`;
+    }
 
 }
 
-function clear(){
-  output.firstElementChild.textContent = '';
-  output.lastElementChild.textContent = '';
-
-};
 
