@@ -1,7 +1,9 @@
 const add = (a, b) => a + b;
 const subtract = (a, b) => a - b;
 const multiply = (a, b) => a * b;
-const divide = (a, b) => a / b;
+const divide = (a, b) => {
+ return a / b;
+} 
 const remainder = (a, b) => a % b;
 
 const output = document.querySelector(".output");
@@ -72,22 +74,44 @@ function getValue(event){
      isSecondNumEmpty = isEmpty(secondNum);
     
     if(isFirstNumEmpty){
+      if(output.lastElementChild.textContent){
+        firstNum[output.lastElementChild.textContent];
+        operator = event.target.textContent;
+    
+      } 
       if(event.target.textContent === "-"){
         firstNum.push(event.target.textContent);
-        renderExpession(operator);
-    }
-    } else if(isSecondNumEmpty){
-        if(operator &&  event.target.textContent === "-"){
-          secondNum.push(event.target.textContent);   
+       
+      }
+      renderExpession(operator);
+      
+    } else if(isSecondNumEmpty ){
+        if(operator){
+          if(event.target.textContent === "-"){
+            secondNum.push(event.target.textContent);
+          }
+             
         }else{
-          operator = event.target.textContent;
+        
+          if(isOnlyNegativeSign(firstNum)){
+               // This check ensures that the first num array cannot have more that 1 negative sign
+          } else{
+            operator = event.target.textContent;
+          }
+         
         }
         renderExpession(operator);
     } else{
-      result = operate(firstNum, operator, secondNum);
-      firstNum = [result];
-      operator = event.target.textContent;
-      secondNum = [];
+      if(isOnlyNegativeSign(secondNum)){
+          //  This ensures that chain operation does not proceed if the secondNum array only has a neg sign
+          // Also ensures that the secondNum cannot have more that one neg sign
+      }else{
+        result = operate(firstNum, operator, secondNum);
+        firstNum = [result];
+        operator = event.target.textContent;
+        secondNum = [];
+      }
+      
 
       renderExpession(operator);
 
@@ -188,9 +212,9 @@ keys.addEventListener("click", getValue);
 function renderExpession(operator){
   let first = firstNum.length > 0?  firstNum.slice().join('') : "";
   let second = secondNum.length > 0? secondNum.slice().join(''): "";
-   if(output.lastElementChild.textContent){
-    output.lastElementChild.textContent = '';
-   }
+  //  if(output.lastElementChild.textContent){
+  //   output.lastElementChild.textContent = '';
+  //  }
 
   if(first && second){
     output.firstElementChild.textContent = `${first} ${operator} ${second}`;
@@ -213,4 +237,4 @@ function clear(){
 
 };
 
-console.log(divide(9, -9))
+console.log(["-"].length)
