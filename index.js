@@ -2,7 +2,7 @@ const add = (a, b) => a + b;
 const subtract = (a, b) => a - b;
 const multiply = (a, b) => a * b;
 const divide = (a, b) => {
- return a / b;
+ return b == 0? "Math Error": a / b;
 } 
 const remainder = (a, b) => a % b;
 
@@ -58,7 +58,7 @@ function operate(first, op, second){
           break;
     }
 
-    return Number.isInteger(result)? result 
+    return Number.isInteger(result) || isNaN(result)? result 
     :Number(result.toFixed(4));  
 }
 
@@ -81,7 +81,9 @@ function handleExpression(event){
   switch(event.target.id){
     case "operator":
      
-      if(output.lastElementChild.textContent){
+
+      if(output.lastElementChild.textContent && !isNaN(output.lastElementChild.textContent)){
+        // The second check ensures that chain operation does not proceed if Math Error is displayed
           firstNum = [output.lastElementChild.textContent];
       } 
 
