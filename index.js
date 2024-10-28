@@ -213,10 +213,10 @@ function handleExpression(event){
             firstNum = [];
             operator = '';
             secondNum = [];
-
+            renderResult(result);
         }
 
-        renderResult(result);
+        
       break;
   }
 }
