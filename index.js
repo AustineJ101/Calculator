@@ -127,7 +127,7 @@ function handleExpression(event){
 
       }
 
-      renderExpession(operator);
+      renderExpression(operator);
 
     break;
 
@@ -142,7 +142,7 @@ function handleExpression(event){
         }
 
         removeLeadingZero(firstNum);
-        renderExpession(operator);
+        renderExpression(operator);
       break;
 
     case "clearBtn":
@@ -168,7 +168,7 @@ function handleExpression(event){
             firstNum.pop();
         }
 
-        renderExpession(operator);
+        renderExpression(operator);
       break;
 
     case "point":
@@ -201,7 +201,7 @@ function handleExpression(event){
               }
             }
 
-          renderExpession(operator);
+          renderExpression(operator);
       break;
 
     case "equalBtn":
@@ -225,7 +225,7 @@ keys.addEventListener("click", handleExpression);
 
 
 
-function renderExpession(operator){
+function renderExpression(operator){
     let first = firstNum.length > 0?  firstNum.slice().join('') : "";
     let second = secondNum.length > 0? secondNum.slice().join(''): "";
 
