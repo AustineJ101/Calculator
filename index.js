@@ -77,8 +77,7 @@ function getValue(event){
         renderSign(event.target.textContent);
     }
     } else if(isSecondNumEmpty){
-        operator = isOnlyNegativeSign(firstNum)? ""
-        :event.target.textContent;
+        operator = event.target.textContent;
         renderExpession(operator);
     } else{
       result = operate(firstNum, operator, secondNum);
@@ -86,7 +85,7 @@ function getValue(event){
       operator = event.target.textContent;
       secondNum = [];
 
-      renderResult(result);
+      renderExpession(operator);
 
     }
 
@@ -209,4 +208,4 @@ function clear(){
   output.firstElementChild.textContent = '';
   output.lastElementChild.textContent = '';
 
-}
+};
