@@ -74,7 +74,7 @@ function getValue(event){
     if(isFirstNumEmpty){
       if(event.target.textContent === "-"){
         firstNum.push(event.target.textContent);
-        renderSign(event.target.textContent);
+        renderExpession(operator);
     }
     } else if(isSecondNumEmpty){
         operator = event.target.textContent;
@@ -184,7 +184,7 @@ keys.addEventListener("click", getValue);
 function renderExpession(operator){
   let first = firstNum.length > 0?  firstNum.slice().join('') : "";
   let second = secondNum.length > 0? secondNum.slice().join(''): "";
-  
+  output.lastElementChild.textContent = "";
   if(first && second){
     output.firstElementChild.textContent = `${first} ${operator} ${second}`;
   } else if(!second && operator){
@@ -193,10 +193,6 @@ function renderExpession(operator){
     output.firstElementChild.textContent = `${first}`;
   }
 
-}
-
-function renderSign(operator){
-  output.firstElementChild.textContent = operator;
 }
 
 function renderResult(result){
