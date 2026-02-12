@@ -1,0 +1,110 @@
+body{
+    box-sizing: border-box;
+    color: white;
+}
+h1{
+    text-align: center;
+    color: crimson;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    text-decoration: underline;
+}
+
+.calculator{
+    width: 350px;
+    height: 620px;
+    background-color: rgb(19, 18, 18);
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+    padding: 100px 20px 20px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.display{
+    height: 90px;
+    border-radius: 20px;
+    box-shadow: inset 5px 8px 5px rgb(0, 0, 0), inset -5px -8px 5px rgb(29, 28, 28);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 28px;
+}
+
+.expression,
+.result{
+    text-align: right;
+
+}
+
+.result{
+    color: rgb(255, 183, 0);
+}
+
+.buttons{
+    display: flex;
+    padding-top: 20px; 
+    gap: 20px;
+}
+
+.buttons .left-sect{
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    gap: 20px;
+  
+}
+
+button{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: none;
+    font-size: 26px;
+    background-color: rgb(19, 18, 18);
+    color: white;
+    box-shadow: 3px 3px 5px 2px black, -3px -3px 5px 2px rgb(29, 28, 28);
+    transition: transform 0.1s;
+}
+
+button:active{
+    transform: scale(0.9)
+}
+
+.buttons .right-sect{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+button.equal{
+    width: 70px;
+    height: 70px;
+    border-radius: 40px;
+    flex: 1;
+    background-color: rgb(255, 183, 0);
+    color: black;
+    font-size: 38px;
+}
+
+.equal:active{
+    transform: scale(0.95);
+}
+
+.op{
+    color: rgb(255, 183, 0);
+    font-size: 38px;
+}
+
+button.del{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+button.clear{
+    font-size: 26px;
+}
+svg{
+    height: 40px;
+    width: 50px;
+}
