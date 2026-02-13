@@ -32,6 +32,7 @@ const calculator = {
     subtract(a, b){return a - b},
     multiply(a, b){return a * b},
     divide(a, b){return a / b},
+    remainder(a, b){return a % b},
 }
 
 function operate(operand1, op, operand2){
@@ -48,6 +49,9 @@ function operate(operand1, op, operand2){
             break;
         case "/":
             result = calculator.divide(operand1, operand2)
+            break;
+        case "%":
+            result = calculator.remainder(operand1, operand2)
     }
 
     return result;
