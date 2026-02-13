@@ -113,23 +113,38 @@ function operandHasPoint(operand){
 }
 
 function handleOperator(op){
-    if(op == "-"){
-        if(operand1.length == 0){
-            operand1.push(op);
-        }else if(operator.length == 0){
-          
-            operator[0] = op;    
-            
-        }else if(operand2.length == 0){
-            operand2.push(op)
+    if(operand2.length > 0){
+        if(!(operand2.length == 1 && operand2[0] == "-")){
+            evaluate(operand1, operator, operand2)
+            operand1.length = 0;
+            operand1.push(answer);
+
+            operator.length = 0;
+            operator[0] = op;
+
+            operand2.length = 0;
         }
-    }else{
-        if(operand1.length != 0){
-            if(!(operand1.length == 1 && operand1[0] == "-") ){
-                operator[0] = op;
+
+    } else{
+        if(op == "-"){
+            if(operand1.length == 0){
+                operand1.push(op);
+            }else if(operator.length == 0){
+            
+                operator[0] = op;    
+                
+            }else if(operand2.length == 0){
+                operand2.push(op)
+            }
+        }else{
+            if(operand1.length != 0){
+                if(!(operand1.length == 1 && operand1[0] == "-") ){
+                    operator[0] = op;
+                }
             }
         }
     }
+    
 
     updateDisplay()
 }
@@ -139,6 +154,7 @@ function handleCommand(e){
     switch(id){
         case "equal":
             evaluate(operand1, operator, operand2);
+            updateDisplay()
             break;
         case "clear":
             clear();
@@ -160,8 +176,6 @@ function evaluate(operand1, operator, operand2){
         answer = operate(op1, op, op2);
     }
     
-
-    updateDisplay()
 
 }
 
