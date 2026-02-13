@@ -58,10 +58,17 @@ function operate(operand1, op, operand2){
 }
 
 function handleNumber(value){
+    if(answer && operand2.length > 0){
+        operand1.length = 0;
+        operator.length = 0;
+        operand2.length = 0;
+        answer = ""
+    }
+
     if(operator.length == 0){
         if(value == "."){ 
             if(!operandHasPoint(operand1)){
-                 if(operand1.length == 0){
+                 if(operand1.length == 0 || (operand1.length == 1 && operand1[0] == "-")){
                     operand1.push("0");
                     operand1.push(value);
                 }else{
@@ -88,7 +95,7 @@ function handleNumber(value){
     }else{
         if(value == "."){
             if(!operandHasPoint(operand2)){
-                 if(operand2.length == 0){
+                 if(operand2.length == 0 || (operand2.length == 1 && operand2[0] == "-")){
                     operand2.push("0");
                     operand2.push(value);
                 }else{
@@ -119,9 +126,11 @@ function operandHasPoint(operand){
 function handleOperator(op){
     if(operand2.length > 0){
         if(!(operand2.length == 1 && operand2[0] == "-")){
+            //Allow for chaining operators
             evaluate(operand1, operator, operand2)
             operand1.length = 0;
             operand1.push(answer);
+            answer = ""
 
             operator.length = 0;
             operator[0] = op;
@@ -179,7 +188,7 @@ function evaluate(operand1, operator, operand2){
 
         answer = operate(op1, op, op2);
     }
-    
+
 
 }
 
@@ -210,15 +219,14 @@ function clear(){
 function del(){
     if(operand2.length){
         operand2.pop();
-        if(operand2.length >= 0){
-            evaluate(operand1, operator, operand2);
-        }
-       
+
     }else if(operator.length){
         operator.pop();
+
     }else{
         operand1.pop();
     }
+
     updateDisplay();
 
     
