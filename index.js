@@ -7,7 +7,7 @@ const result = document.querySelector(".result");
 const operand1 = [];
 const operator = [];
 const operand2 = [];
-let answer = "";
+let answer = [];
 
 numbers.forEach(btn => {
     btn.addEventListener("click", (e)=> {
@@ -58,11 +58,11 @@ function operate(operand1, op, operand2){
 }
 
 function handleNumber(value){
-    if(answer && operand2.length > 0){
+    if(answer.length > 0 && operand2.length > 0){
         operand1.length = 0;
         operator.length = 0;
         operand2.length = 0;
-        answer = ""
+        answer.length = 0;
     }
 
     if(operator.length == 0){
@@ -129,8 +129,8 @@ function handleOperator(op){
             //Allow for chaining operators
             evaluate(operand1, operator, operand2)
             operand1.length = 0;
-            operand1.push(answer);
-            answer = ""
+            operand1.push(answer[0]);
+            answer.length = 0
 
             operator.length = 0;
             operator[0] = op;
@@ -180,13 +180,13 @@ function handleCommand(e){
 
 function evaluate(operand1, operator, operand2){
     if(operand2.length == 0 || (operand2.length == 1 && operand2[0] ==  "-")){
-        answer = "";
+        answer.length = 0;
     }else{
         let op1 = +operand1.join("");
         let op = operator[0];
         let op2 = +operand2.join("");
 
-        answer = operate(op1, op, op2);
+        answer[0] = operate(op1, op, op2);
     }
 
 
@@ -203,14 +203,14 @@ function updateDisplay(){
     }
 
     expression.textContent = exp;
-    result.textContent = answer;
+    result.textContent = answer.length == 0? " ": answer[0];
 }
 
 function clear(){
     operand1.length = 0;
     operator.length = 0;
     operand2.length = 0;
-    answer = '';
+    answer.length = 0;
     
     updateDisplay();
     
@@ -219,6 +219,7 @@ function clear(){
 function del(){
     if(operand2.length){
         operand2.pop();
+        answer.length = 0;
 
     }else if(operator.length){
         operator.pop();
